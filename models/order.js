@@ -1,0 +1,94 @@
+const mongoose = require("mongoose");
+
+const orderSchema = new mongoose.Schema({
+  shippingInfo: {
+    address: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    phoneNo: {
+      type: String,
+      required: true,
+    },
+    postalCode: {
+      type: String,
+      required: true,
+    },
+    state: {
+      type: String,
+      required: true,
+    },
+    country: {
+      type: String,
+      required: true,
+    },
+  },
+  user: {
+    type: mongoose.Schema.ObjectId, // or use mongoose.Schema.Types.ObjectId
+    ref: "User",
+    required: true,
+  },
+  orderItems: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+      },
+      image: {
+        type: String,
+        required: true,
+      },
+      price: {
+        type: String,
+        required: true,
+      },
+      product: {
+        type: mongoose.Schema.ObjectId, // or use mongoose.Schema.Types.ObjectId
+        ref: "Product",
+        required: true,
+      },
+    },
+  ],
+  paymentInfo: {
+    id: {
+      type: String,
+    },
+  },
+  taxAmount: {
+    type: Number,
+    required: true,
+  },
+  shippingAmount: {
+    type: Number,
+    required: true,
+  },
+  totalAmount: {
+    type: Number,
+    required: true,
+  },
+  orderStatus: {
+    type: String,
+    required: true,
+    default: "processing",
+  },
+  deliveredAt: {
+    type: Date,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+module.exports = mongoose.model("Order", orderSchema);
+
+// ref link
+// https://stackoverflow.com/questions/28997636/should-i-use-schema-types-objectid-or-schema-objectid-when-defining-a-mongoose-s#:~:text=4%20Answers&text=It%20doesn't%20matter.,Both%20is%20exactly%20the%20same.
